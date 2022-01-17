@@ -1,3 +1,48 @@
-body {
-  margin: 10%;
+* {
+  margin: 0;
+  padding: 0;
+}
+.wrapper {
+  display: grid;
+  gap: 20px;
+}
+/* Navigation */
+
+.nav-container {
+  padding: 0 2em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.link-container ul {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.search-panel {
+  justify-self: end;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+}
+nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Top container */
+
+.top-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.restaurant-container {
+  padding: 80px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.restaurant-card {
+  padding: 20px;
+  background-color: grey;
+  border: 2px dotted red;
 }

@@ -1,86 +1,73 @@
 'use strict';
 
-  const highestNumber = 10;
-  const lowestNumber = 1;
-  const maxGuessCount = 5;
-  let randomNumber = Math.floor(Math.random() * highestNumber) + lowestNumber;
+const coursesEn = ["Hamburger, cream sauce and poiled potates",
+"Goan style fish curry and whole grain rice",
+"Vegan Chili sin carne and whole grain rice",
+"Broccoli puree soup, side salad with two napas",
+"Lunch baguette with BBQ-turkey filling",
+"Cheese / Chicken / Vege / Halloum burger and french fries"];
 
-  const infoText = document.querySelector('.info-text');
-  infoText.textContent = `We have selected a random number between ${lowestNumber} and ${highestNumber}. See if you can guess it in ${maxGuessCount} turns or fewer. We will tell you if your guess was too high or too low.`;
+const coursesFi = ["Jauhelihapihvi, ruskeaa kermakastiketta ja keitettyä perunaa",
+"Goalaista kalacurrya ja täysjyväriisiä",
+"vegaani Chili sin carne ja täysjyväriisi",
+"Parsakeittoa,lisäkesalaatti kahdella napaksella",
+"Lunch baguette with BBQ-turkey filling",
+"Juusto / Kana / Kasvis / Halloumi burgeri ja ranskalaiset"];
 
-  const guesses = document.querySelector('.guesses');
-  const lastResult = document.querySelector('.lastResult');
-  const lowOrHi = document.querySelector('.lowOrHi');
-  const guessSubmit = document.querySelector('.guessSubmit');
-  const guessField = document.querySelector('.guessField');
+const restaurantCard = document.createElement('div');
+restaurantCard.classList.add('restaurant-card');
 
-  let guessCount = 1;
-  let resetButton;
+const restaurantName = document.createElement('h3');
+restaurantName.textContent = 'Ravintola';
 
-  let timerStart = Date.now();
+const menuContent = document.createElement('p');
+menuContent.textContent = coursesFi;
 
-  function checkGuess() {
-    const userGuess = Number(guessField.value);
-    if (guessCount === 1) {
-      guesses.textContent = 'Previous guesses: ';
-    }
+const languageButton = document.createElement('button');
+languageButton.textContent = 'Language: FIN';
 
-    guesses.textContent += userGuess + ' ';
+const sortButton = document.createElement('button');
+sortButton.textContent = 'Sort menu';
 
-    if (userGuess === randomNumber) {
-      lastResult.textContent = 'Congratulations! You got it right!';
-      lastResult.style.backgroundColor = 'green';
-      lowOrHi.textContent = '';
-      setGameOver();
-    } else if (guessCount === maxGuessCount) {
-      lastResult.textContent = '!!!GAME OVER!!!';
-      lowOrHi.textContent = '';
-      setGameOver();
-    } else {
-      lastResult.textContent = 'Wrong!';
-      lastResult.style.backgroundColor = 'red';
-      if(userGuess < randomNumber) {
-        lowOrHi.textContent = 'Last guess was too low!' ;
-      } else if(userGuess > randomNumber) {
-        lowOrHi.textContent = 'Last guess was too high!';
-      }
-    }
+const randomDishButton = document.createElement('button');
+randomDishButton.textContent = 'Random dish';
 
-    guessCount++;
-    guessField.value = '';
-    guessField.focus();
+restaurantCard.appendChild(restaurantName);
+restaurantCard.appendChild(menuContent);
+restaurantCard.appendChild(languageButton);
+restaurantCard.appendChild(sortButton);
+restaurantCard.appendChild(randomDishButton);
+
+const restaurantContainer = document.querySelector('.restaurant-container');
+restaurantContainer.appendChild(restaurantCard);
+
+sortButton.addEventListener('click', () => {
+  if (menuContent.textContent == coursesFi){
+  coursesFi.sort();
+  menuContent.textContent = coursesFi;
+  } else {
+    coursesEn.sort();
+    menuContent.textContent = coursesEn;
   }
+});
 
-  guessSubmit.addEventListener('click', checkGuess);
-
-  function setGameOver() {
-    guessField.disabled = true;
-    guessSubmit.disabled = true;
-    resetButton = document.createElement('button');
-    resetButton.textContent = 'Start new game';
-    document.body.appendChild(resetButton);
-    resetButton.addEventListener('click', resetGame);
-
-    let timerEnd = (Date.now() - timerStart) / 1000;
-    //simply using lowOrHi's empty field to fill it with game timer
-    console.log(timerEnd);
-    lowOrHi.textContent = 'Time taken to finish the game: ' + timerEnd + ' seconds.' + 'Total guesses: ' + guessCount;
-    
+languageButton.addEventListener('click', () => {
+  if (menuContent.textContent == coursesFi){
+    menuContent.textContent = coursesEn;
+    languageButton.textContent = 'Language: ENG';
+  } else {
+    menuContent.textContent = coursesFi;
+    languageButton.textContent = 'Language: FIN';
   }
+});
 
-  function resetGame() {
-    timerStart = Date.now();
-    guessCount = 1;
-    const resetParas = document.querySelectorAll('.resultParas p');
-    for (const resetPara of resetParas) {
-      resetPara.textContent = '';
-    }
-
-    resetButton.parentNode.removeChild(resetButton);
-    guessField.disabled = false;
-    guessSubmit.disabled = false;
-    guessField.value = '';
-    guessField.focus();
-    lastResult.style.backgroundColor = 'white';
-    randomNumber = Math.floor(Math.random() * highestNumber) + lowestNumber;
+randomDishButton.addEventListener('click', () => {
+  if (menuContent.textContent == coursesFi){
+    var dish = coursesFi[Math.floor(Math.random()*coursesFi.length)];
+  } else {
+    var dish = coursesEn[Math.floor(Math.random()*coursesEn.length)];
   }
+  const randomDish = document.createElement('p');
+  randomDish.textContent = dish;
+  restaurantCard.appendChild(randomDish);
+});
