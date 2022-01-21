@@ -26,7 +26,7 @@ const sortByPrice = () => {
   console.log(menuByPrice);
 };
 sortByPrice();
-
+//TODO: DISPLAY NAMES OF DISHES INSTEAD OF PRICE
 const filterByPrice = () => {
   let maxCost = 5;
   let priceArr = menuArr.map((dish) => dish.price);
@@ -34,3 +34,18 @@ const filterByPrice = () => {
   console.log(filteredArr);
 };
 filterByPrice();
+
+const raisePrices = () => {
+  let counter = 1.15;
+  let priceArr = menuArr.map((dish) => (dish.price * counter).toFixed(2));
+  console.log(priceArr);
+};
+raisePrices();
+
+const menuCost = () => {
+  let newArr = menuArr.reduce((a, b) => ({
+    price: a.price + b.price,
+  }));
+  console.log(newArr);
+};
+menuCost();
