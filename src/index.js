@@ -1,5 +1,9 @@
 "use strict";
 
+import LunchMenu from "./menu.json";
+
+console.log(LunchMenu);
+
 const menuArr = [
   { name: "Lingonberry jam", price: 4.0 },
   { name: "Mushroom and bean casserole", price: 5.5 },
@@ -49,3 +53,28 @@ const menuCost = () => {
   console.log(newArr);
 };
 menuCost();
+
+const veganMeals = () => {
+  const LunchMenus = LunchMenu.LunchMenus;
+  let vegMeals = [];
+
+  for (let i = 0; i < LunchMenus.length; i++) {
+    vegMeals.push({
+      SetMenus: [],
+    });
+    for (let b = 0; b < LunchMenus[i].SetMenus.length; b++) {
+      vegMeals[i].SetMenus.push({
+        Name: LunchMenus[i].SetMenus[b].Name,
+        Meals: [],
+      });
+      for (let c = 0; c < LunchMenus[i].SetMenus[b].Meals.length; c++) {
+        if (LunchMenus[i].SetMenus[b].Meals[c].Diets.includes("Veg"))
+          vegMeals[i].SetMenus[b].Meals.push(
+            LunchMenus[i].SetMenus[b].Meals[c]
+          );
+      }
+    }
+  }
+  console.log(vegMeals);
+};
+veganMeals();
