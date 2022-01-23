@@ -32,10 +32,9 @@ const sortByPrice = () => {
 sortByPrice();
 
 const filterByPrice = () => {
-  let maxCost = 5;
-  let priceArr = menuArr.map((dish) => dish.price);
-  let filteredArr = priceArr.filter((price) => price < maxCost);
-  console.log(filteredArr);
+  const maxPrice = 5;
+  const filteredMenu = menuArr.filter((a) => a.price < maxPrice);
+  console.log(filteredMenu);
 };
 filterByPrice();
 
@@ -62,15 +61,15 @@ const veganMeals = () => {
     vegMeals.push({
       SetMenus: [],
     });
-    for (let b = 0; b < LunchMenus[i].SetMenus.length; b++) {
+    for (let j = 0; j < LunchMenus[i].SetMenus.length; j++) {
       vegMeals[i].SetMenus.push({
-        Name: LunchMenus[i].SetMenus[b].Name,
+        Name: LunchMenus[i].SetMenus[j].Name,
         Meals: [],
       });
-      for (let c = 0; c < LunchMenus[i].SetMenus[b].Meals.length; c++) {
-        if (LunchMenus[i].SetMenus[b].Meals[c].Diets.includes("Veg"))
-          vegMeals[i].SetMenus[b].Meals.push(
-            LunchMenus[i].SetMenus[b].Meals[c]
+      for (let n = 0; n < LunchMenus[i].SetMenus[j].Meals.length; n++) {
+        if (LunchMenus[i].SetMenus[j].Meals[n].Diets.includes("Veg"))
+          vegMeals[i].SetMenus[j].Meals.push(
+            LunchMenus[i].SetMenus[j].Meals[n]
           );
       }
     }
