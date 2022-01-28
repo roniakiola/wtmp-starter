@@ -4,8 +4,10 @@
 // If user types same values as in cheatArray in exact order, will alert be shown on the page
 
 let cheatArray = ['k', 'a', 'l', 'j', 'a', 'a'];
+
 //users inputs saved in an array
 let userInserts = [];
+
 //counter for comparing array values
 let count = 0;
 
@@ -23,17 +25,21 @@ window.addEventListener('keyup', (e) => {
     count = 0;
   }
 });
+
 //2:
 //render cursor coodrinates on web page
+
 const cursorCoordinates = (e) => {
   const Coords = document.querySelector('p');
   Coords.innerHTML = 'X:' + e.pageX + '<br>' + 'Y:' + e.pageY;
 };
+
 //double click triggers the function
 window.addEventListener('dblclick', cursorCoordinates);
 
 //3:
 //Mouse over hover element
+
 const target = document.querySelector('h1');
 
 target.addEventListener('mouseover', (e) => {
@@ -42,8 +48,10 @@ target.addEventListener('mouseover', (e) => {
 target.addEventListener('mouseout', (e) => {
   e.target.innerHTML = 'Touch me :)';
 });
+
 //4 & 5:
 //On DOM load: start two timers
+
 window.addEventListener('DOMContentLoaded', () => {
   //Timeout works once, then stops
   setTimeout(() => {
@@ -53,6 +61,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let counter = 0;
   const idleTimer = document.querySelector('.idle-timer');
+
   //every 1 second (1000ms) the counter is ingremented by 1. If mouse movement or keyboard presses are not registered
   //in 15 seconds, text is then rendered on the page
   const noMovement = () => {
