@@ -1,7 +1,35 @@
+:root {
+  /* main colors */
+  --maingreen: #43e04f;
+  --mainred: #940e3f;
+  --darkgray: #343a40;
+  --lightgray: #9badbf;
+  --black: #000000;
+
+  /* side colors */
+  --sidegreendark: #1d9426;
+  --sidegreenlight: #65ff71;
+  --sidered: #e0437c;
+
+  /* omat */
+  --linkovercolor: rgb(143, 182, 162);
+}
+@font-face {
+  font-family: latoRegular;
+  src: url(fonts/Lato-Regular.ttf);
+}
+@font-face {
+  font-family: latoBold;
+  src: url(fonts//Lato-Bold.ttf);
+}
+@font-face {
+  font-family: latoHeavy;
+  src: url(fonts//Lato-Black.ttf);
+}
 * {
   margin: 0;
   padding: 0;
-  font-family: "Heebo", sans-serif;
+  font-family: 'Heebo', sans-serif;
 }
 a {
   text-decoration: none;
@@ -10,18 +38,27 @@ a {
 ul {
   list-style: none;
 }
+p {
+  font-family: latoRegular;
+  font-size: 24px;
+}
 input {
+  width: 100%;
   height: 2.25em;
-  padding: 0.75em;
+  padding: 0.75em 2.5em;
   border: 1px solid;
   border-radius: 4px;
-  border-color: brown;
+  border-color: var(--mainred);
+  background-image: url(misc/noun_Search_781957.svg);
+  background-repeat: no-repeat;
+  background-position-y: 3px;
+  background-position-x: 2px;
 }
 .wrapper {
   display: grid;
   grid-template-areas:
-    "nav"
-    "main";
+    'nav'
+    'main';
 }
 /* Navigation */
 .nav-container {
@@ -41,10 +78,12 @@ input {
 }
 nav a {
   padding: 18px;
-  color: brown;
+  color: var(--mainred);
+  font-family: latoBold;
+  font-size: 21px;
 }
 nav a:hover {
-  background-color: rgb(143, 182, 162);
+  background-color: var(--linkovercolor);
 }
 /* Main content */
 main {
@@ -53,18 +92,29 @@ main {
   gap: 2em;
   grid-template-rows: 2fr 1fr auto;
   grid-template-areas:
-    "banner"
-    "info"
-    "restaurants";
+    'banner'
+    'info'
+    'restaurants';
 }
 .banner {
   grid-area: banner;
   height: 100%;
   display: flex;
-  text-align: center;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  background-color: rgb(95, 160, 106);
+  justify-content: center;
+  background-color: var(--maingreen);
+}
+.banner h1 {
+  font-family: Roboto Slab;
+  font-weight: bold;
+  font-size: 60px;
+  color: white;
+}
+.banner p {
+  font-family: Roboto Slab;
+  font-size: 23px;
+  color: white;
 }
 .info-container {
   grid-area: info;
@@ -72,18 +122,84 @@ main {
 }
 .restaurant-container {
   display: grid;
+  padding: 0 15%;
   gap: 0.5em;
   grid-area: restaurants;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(500px, auto));
   grid-template-rows: auto;
   justify-items: center;
 }
 .restaurant-card {
-  padding: 0.75em;
-  max-width: 400px;
+  display: grid;
+  padding: 1em;
+  gap: 10px;
+  grid-template-areas: 'img content';
   height: auto;
-  background-color: rgb(197, 197, 197);
+  border: 2px solid;
+  border-color: var(--black);
+  border-radius: 5px;
+}
+.image-container {
+  grid-area: img;
+  display: flex;
+  justify-content: center;
+  border: 2px solid;
+}
+.image-container img {
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+}
+.content {
+  grid-area: content;
+  display: grid;
+  grid-template-areas:
+    'header dist'
+    'text text';
+}
+.restaurant-name {
+  grid-area: header;
+  font-family: latoHeavy;
+  font-size: 21px;
+}
+.distance-box {
+  grid-area: dist;
+  display: flex;
+  justify-content: center;
+}
+.distance-box svg {
+  max-height: 25px;
+}
+.distance-box svg:hover {
+  fill: var(--sidered);
+}
+.distance-box p {
+  font-size: 14px;
+}
+.text-content {
+  grid-area: text;
+}
+.text-content p {
+  font-size: 10px;
+}
+.add-restaurant {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  width: 100%;
+  height: 33%;
   border: 2px dotted;
-  border-color: brown;
-  border-radius: 4px;
+  border-radius: 5px;
+  border-color: var(--lightgray);
+  background: none;
+  color: var(--lightgray);
+}
+.add-restaurant:hover {
+  background: var(--maingreen);
+  cursor: pointer;
+}
+.add-restaurant svg {
+  max-width: 25px;
+  padding-right: 1em;
+  fill: var(--lightgray);
 }
