@@ -1,47 +1,36 @@
 'use strict';
 
 import SodexoData from './modules/sodexo-data';
+import FazerData from './modules/fazer-data';
 
 console.log(SodexoData);
+console.log(FazerData);
 
+let order = 'desc';
 let language = 'fi';
-let currentMenu = SodexoData.coursesFi;
+// let currentMenu = SodexoData.coursesFi;
 
 const restaurantContainer = document.querySelector('.restaurant-container');
 
-const restaurantCard = document.createElement('div');
-restaurantCard.classList.add('restaurant-card');
-
-const restaurantName = document.createElement('h3');
-restaurantName.textContent = 'Ravintola';
-
-const menuContent = document.createElement('p');
-menuContent.textContent = currentMenu;
-
-const languageButton = document.createElement('button');
+const languageButton = document.getElementById('changeLang');
 languageButton.textContent = 'Language: FIN';
 
-const sortButton = document.createElement('button');
+const sortButton = document.getElementById('sortMenu');
 sortButton.textContent = 'Sort menu';
 
-const randomDishButton = document.createElement('button');
+const randomDishButton = document.getElementById('randomDish');
 randomDishButton.textContent = 'Random dish';
-
-restaurantCard.appendChild(restaurantName);
-restaurantCard.appendChild(menuContent);
-restaurantCard.appendChild(languageButton);
-restaurantCard.appendChild(sortButton);
-restaurantCard.appendChild(randomDishButton);
-restaurantContainer.appendChild(restaurantCard);
 
 const changeLanguage = () => {
   if (language === 'fi') {
     language = 'en';
-    currentMenu = SodexoData.coursesEn;
+    renderMenu(FazerData.coursesEn, 'fazer');
+    renderMenu(SodexoData.coursesEn, 'sodexo');
     languageButton.textContent = 'Language: ENG';
   } else {
     language = 'fi';
-    currentMenu = SodexoData.coursesFi;
+    renderMenu(FazerData.coursesFi, 'fazer');
+    renderMenu(SodexoData.coursesFi, 'sodexo');
     languageButton.textContent = 'Language: FIN';
   }
 };
@@ -54,17 +43,24 @@ const sortMenu = (menu, order) => {
   return sortedMenu;
 };
 
-const renderMenu = () => {
-  menuContent.textContent = currentMenu;
+const renderMenu = (menu, targetId) => {
+  const ulElement = document.getElementById(targetId);
+  ulElement.innerHTML = '';
+  for (const item of menu) {
+    const liElement = document.createElement('li');
+    liElement.textContent = item;
+    ulElement.appendChild(liElement);
+  }
 };
 
 const init = () => {
+  renderMenu(FazerData.coursesFi, 'fazer');
+  renderMenu(SodexoData.coursesFi, 'sodexo');
+
   languageButton.addEventListener('click', () => {
     changeLanguage();
-    renderMenu();
   });
 
-  let order = 'desc';
   sortButton.addEventListener('click', () => {
     if (order === 'desc') {
       order = 'asc';

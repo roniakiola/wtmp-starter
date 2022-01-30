@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-import SodexoMenu from "../assets/menu.json";
+import SodexoMenu from '../assets/menu.json';
 
 const coursesFi = [];
 const coursesEn = [];
@@ -14,5 +14,5 @@ const parseSodexoMenu = () => {
   }
 };
 parseSodexoMenu();
-const SodexoData = { coursesEn, coursesFi };
+const SodexoData = { coursesFi, coursesEn };
 export default SodexoData;
