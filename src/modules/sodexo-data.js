@@ -2,29 +2,21 @@
 
 import { fetchData } from './fetch-data';
 
-const coursesFi = [];
-const coursesEn = [];
-
+//current date YYYY-MM-DD
 let currentDate = new Date().toISOString().split('T')[0];
+
 const sodexoUrl = `https://www.sodexo.fi/ruokalistat/output/daily_json/152/${currentDate}`;
 
-const fetchCoursesFi = async () => {
-  const response = await fetchData(sodexoUrl);
-  Object.values(response.courses).forEach((course) => {
-    coursesFi.push(course.title_fi);
-  });
-  console.log(coursesFi);
+//fetch data and map new array
+const coursesFi = async () => {
+  const menu = await fetchData(sodexoUrl);
+  return Object.values(menu.courses).map((a) => a.title_fi);
 };
 
-const fetchCoursesEn = async () => {
-  const response = await fetchData(sodexoUrl);
-  Object.values(response.courses).forEach((course) => {
-    coursesEn.push(course.title_en);
-  });
-  console.log(coursesEn);
+const coursesEn = async () => {
+  const menu = await fetchData(sodexoUrl);
+  return Object.values(menu.courses).map((a) => a.title_en);
 };
-fetchCoursesFi();
-fetchCoursesEn();
 
-const SodexoData = { coursesFi, coursesEn, currentDate };
+const SodexoData = { coursesFi, coursesEn };
 export default SodexoData;

@@ -18,10 +18,6 @@ import FazerData from './modules/fazer-data';
 //   });
 // }
 
-console.log(SodexoData.coursesFi);
-console.log(FazerData);
-console.log(SodexoData.currentDate);
-
 let order = 'desc';
 let language = 'fi';
 
@@ -36,16 +32,16 @@ sortButton.textContent = 'Sort menu';
 const randomDishButton = document.getElementById('randomDish');
 randomDishButton.textContent = 'Random dish';
 
-const changeLanguage = () => {
+const changeLanguage = async () => {
   if (language === 'fi') {
     language = 'en';
     renderMenu(FazerData.coursesEn, 'fazer');
-    renderMenu(SodexoData.coursesEn, 'sodexo');
+    renderMenu(await SodexoData.coursesEn(), 'sodexo');
     languageButton.textContent = 'Language: ENG';
   } else {
     language = 'fi';
     renderMenu(FazerData.coursesFi, 'fazer');
-    renderMenu(SodexoData.coursesFi, 'sodexo');
+    renderMenu(await SodexoData.coursesFi(), 'sodexo');
     languageButton.textContent = 'Language: FIN';
   }
 };
@@ -68,9 +64,9 @@ const renderMenu = (menu, targetId) => {
   }
 };
 
-const init = () => {
+const init = async () => {
   renderMenu(FazerData.coursesFi, 'fazer');
-  renderMenu(SodexoData.coursesFi, 'sodexo');
+  renderMenu(await SodexoData.coursesFi(), 'sodexo');
 
   languageButton.addEventListener('click', () => {
     changeLanguage();
