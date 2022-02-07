@@ -3,25 +3,27 @@
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('./service-worker.js')
-      .then((registration) => {
-        console.log('SW registered: ', registration);
-      })
-      .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
-      });
-  });
-}
+//Uncomment below and in webpack.common.js to enable ServiceWorker for distribution
 
-console.log(SodexoData);
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker
+//       .register('./service-worker.js')
+//       .then((registration) => {
+//         console.log('SW registered: ', registration);
+//       })
+//       .catch((registrationError) => {
+//         console.log('SW registration failed: ', registrationError);
+//       });
+//   });
+// }
+
+console.log(SodexoData.coursesFi);
 console.log(FazerData);
+console.log(SodexoData.currentDate);
 
 let order = 'desc';
 let language = 'fi';
-// let currentMenu = SodexoData.coursesFi;
 
 const restaurantContainer = document.querySelector('.restaurant-container');
 
