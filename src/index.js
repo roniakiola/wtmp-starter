@@ -36,12 +36,12 @@ const changeLanguage = async () => {
   if (language === 'fi') {
     language = 'en';
     renderMenu(FazerData.coursesEn, 'fazer');
-    renderMenu(await SodexoData.coursesEn(), 'sodexo');
+    renderMenu(await SodexoData.coursesEn, 'sodexo');
     languageButton.textContent = 'Language: ENG';
   } else {
     language = 'fi';
     renderMenu(FazerData.coursesFi, 'fazer');
-    renderMenu(await SodexoData.coursesFi(), 'sodexo');
+    renderMenu(await SodexoData.coursesFi, 'sodexo');
     languageButton.textContent = 'Language: FIN';
   }
 };
@@ -66,7 +66,7 @@ const renderMenu = (menu, targetId) => {
 
 const init = async () => {
   renderMenu(FazerData.coursesFi, 'fazer');
-  renderMenu(await SodexoData.coursesFi(), 'sodexo');
+  renderMenu(await SodexoData.coursesFi, 'sodexo');
 
   languageButton.addEventListener('click', () => {
     changeLanguage();
