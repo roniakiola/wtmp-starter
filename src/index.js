@@ -104,7 +104,7 @@ const init = async () => {
   });
 
   searchBar.addEventListener('input', (e) => {
-    searchMenu.searchMenu(menus, e);
+    console.log(searchMenu.searchMenu(menus, e));
   });
 };
 init();
