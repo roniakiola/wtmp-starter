@@ -2,6 +2,7 @@
 
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
+import searchMenu from './modules/search';
 
 //Uncomment below and in webpack.common.js to enable ServiceWorker for distribution
 
@@ -18,10 +19,12 @@ import FazerData from './modules/fazer-data';
 //   });
 // }
 
+let menus = {};
+
+const searchBar = document.querySelector('#search');
+
 let order = 'desc';
 let language = 'fi';
-
-const restaurantContainer = document.querySelector('.restaurant-container');
 
 const languageButton = document.getElementById('changeLang');
 languageButton.textContent = 'Language: FIN';
@@ -35,13 +38,13 @@ randomDishButton.textContent = 'Random dish';
 const changeLanguage = async () => {
   if (language === 'fi') {
     language = 'en';
-    renderMenu(await FazerData.coursesEn, 'fazer');
-    renderMenu(await SodexoData.coursesEn, 'sodexo');
+    renderMenu(menus.FazerMenuEn, 'fazer');
+    renderMenu(menus.SodexoMenuEn, 'sodexo');
     languageButton.textContent = 'Language: ENG';
   } else {
     language = 'fi';
-    renderMenu(await FazerData.coursesFi, 'fazer');
-    renderMenu(await SodexoData.coursesFi, 'sodexo');
+    renderMenu(menus.FazerMenuFi, 'fazer');
+    renderMenu(menus.SodexoMenuFi, 'sodexo');
     languageButton.textContent = 'Language: FIN';
   }
 };
@@ -65,8 +68,21 @@ const renderMenu = (menu, targetId) => {
 };
 
 const init = async () => {
-  renderMenu(await FazerData.coursesFi, 'fazer');
-  renderMenu(await SodexoData.coursesFi, 'sodexo');
+  //Init menus into variables and insert to menus object
+  const SodexoMenuFi = await SodexoData.coursesFi;
+  const SodexoMenuEn = await SodexoData.coursesEn;
+  const FazerMenuFi = await FazerData.coursesFi;
+  const FazerMenuEn = await FazerData.coursesEn;
+
+  menus = {
+    SodexoMenuFi,
+    SodexoMenuEn,
+    FazerMenuFi,
+    FazerMenuEn,
+  };
+
+  renderMenu(FazerMenuFi, 'fazer');
+  renderMenu(SodexoMenuFi, 'sodexo');
 
   languageButton.addEventListener('click', () => {
     changeLanguage();
@@ -85,6 +101,10 @@ const init = async () => {
   randomDishButton.addEventListener('click', () => {
     var dish = currentMenu[Math.floor(Math.random() * currentMenu.length)];
     alert(dish);
+  });
+
+  searchBar.addEventListener('input', (e) => {
+    searchMenu.searchMenu(menus, e);
   });
 };
 init();
