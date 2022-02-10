@@ -1,25 +1,37 @@
 'use strict';
 
-import FazerMenuFi from '../assets/fazer-menu-fi.json';
-import FazerMenuEn from '../assets/fazer-menu-en.json';
+import { fetchData } from './fetch-data';
 
-console.log(FazerMenuFi, FazerMenuEn);
+let currentDate = new Date().toISOString().split('T')[0];
 
-const parseDayMenu = (menu, dayOfWeek) => {
-  const dayMenu = menu[dayOfWeek].SetMenus.map((setMenu) => {
-    const name = setMenu.Name;
-    let meals = '';
-    for (const meal of setMenu.Meals) {
-      meals += meal.Name + ', ';
-    }
-    return name ? name + ': ' + meals : meals;
-  });
-  return dayMenu;
+let coursesFi = [];
+let coursesEn = [];
+
+const fazerUrlFi = `https://www.foodandco.fi/api/restaurant/menu/week?language=fi&restaurantPageId=270540&weekDate=${currentDate}`;
+const fazerUrlEn = `https://www.foodandco.fi/api/restaurant/menu/week?language=en&restaurantPageId=270540&weekDate=${currentDate}`;
+
+const todayIndex = () => {
+  const weekDay = new Date().getDay() - 1;
+  return weekDay;
 };
-console.log(parseDayMenu(FazerMenuEn.LunchMenus, 0));
 
-const coursesFi = parseDayMenu(FazerMenuFi.LunchMenus, 0);
-const coursesEn = parseDayMenu(FazerMenuEn.LunchMenus, 0);
+const parseMenu = async (menu, language) => {
+  let response;
+  if (language === 'fi') {
+    response = await fetchData(fazerUrlFi, true);
+  } else {
+    response = await fetchData(fazerUrlEn, true);
+  }
+  const parsedResponse = JSON.parse(response.contents);
+  menu = parsedResponse.LunchMenus[todayIndex()].SetMenus.map((SetMenu) =>
+    SetMenu.Meals.map((Meal) => Meal.Name)
+  ).map((Meal) => Meal.join(', '));
+
+  return menu;
+};
+
+coursesFi = parseMenu(coursesFi, 'fi');
+coursesEn = parseMenu(coursesFi, 'en');
 
 const FazerData = { coursesFi, coursesEn };
 export default FazerData;
